@@ -1,0 +1,35 @@
+#!/bin/sh
+
+DIR=`dirname $0`
+
+CURL="curl -s -S"
+
+echo > $DIR/hosts
+$CURL http://hosts-file.net/ad_servers.asp | dos2unix >> $DIR/hosts
+$CURL http://winhelp2002.mvps.org/hosts.txt | dos2unix >> $DIR/hosts
+cat $DIR/include | sed 's/^./127.0.0.1 \0/g' >> $DIR/hosts
+
+EXCLUDE='^'$(
+	cat $DIR/exclude \
+	| sed -r 's/\n/|/g'
+)'$'
+
+cat $DIR/hosts \
+	| sed -r '/localhost/d;/127.0.0.1/!d;s/127.0.0.1\s+//' \
+	| sed -r 's/#.+//g' \
+	| sed -r 's/ +$//g' \
+	| grep -Ev "$EXCLUDE" \
+	| sort \
+	| uniq \
+	> $DIR/hosts-list
+
+cat $DIR/hosts-list \
+	| sed -r 's/^(.+.)$/address=\/\1\/192.168.0.12/' \
+	> $DIR/dnsmasq.conf
+
+cat $DIR/hosts-list \
+	| sed -r 's/^(.+.)$/server_name \1;/' \
+	> $DIR/nginx.hosts
+
+sudo invoke-rc.d dnsmasq restart
+sudo invoke-rc.d nginx restart

@@ -1,0 +1,6 @@
+/dnsmasq.conf
+/exclude
+/hosts
+/hosts-list
+/include
+/nginx.hosts
