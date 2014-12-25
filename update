@@ -35,5 +35,5 @@ cat $DIR/nginx.conf.in \
 	| sed "s/DIR/$DIR/g" \
 	> $DIR/nginx.conf
 
-sudo invoke-rc.d dnsmasq restart
-sudo invoke-rc.d nginx restart
+sudo systemctl restart dnsmasq
+sudo systemctl restart nginx
