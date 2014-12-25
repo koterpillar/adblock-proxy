@@ -15,6 +15,7 @@ EXCLUDE='^'$(
 )'$'
 
 cat $DIR/hosts \
+	| sed -r 's/0.0.0.0/127.0.0.1/g' \
 	| sed -r '/localhost/d;/127.0.0.1/!d;s/127.0.0.1\s+//' \
 	| sed -r 's/#.+//g' \
 	| sed -r 's/ +$//g' \
