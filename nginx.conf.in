@@ -1,7 +1,7 @@
 server {
-	include /home/alex/adblock/nginx.hosts;
+	include DIR/nginx.hosts;
 
-	root /home/alex/adblock/nginx;
+	root DIR/nginx;
 
 	rewrite ^.+\.(jpg|jpeg)$ /blank.jpeg break;
 	rewrite ^.+\.png$ /blank.png break;
@@ -10,4 +10,3 @@ server {
 
 	access_log /var/log/nginx/ads-access.log;
 }
-
