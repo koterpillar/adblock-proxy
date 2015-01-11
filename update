@@ -1,6 +1,6 @@
 #!/bin/sh
 
-DIR=`dirname $0`
+DIR=$(realpath $(dirname $0))
 
 CURL="curl -s -S"
 
