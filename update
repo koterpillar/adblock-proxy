@@ -34,7 +34,7 @@ cat $DIR/hosts-list \
 	> $DIR/nginx.hosts
 
 cat $DIR/nginx.conf.in \
-	| sed "s/DIR/$DIR/g" \
+	| sed "s!DIR!$DIR!g" \
 	> $DIR/nginx.conf
 
 sudo systemctl restart dnsmasq
