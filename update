@@ -11,7 +11,8 @@ cat $DIR/include | sed 's/^./127.0.0.1 \0/g' >> $DIR/hosts
 
 EXCLUDE='^'$(
 	cat $DIR/exclude \
-	| tr '\n' '|'
+	| tr '\n' '|' \
+	| sed 's/|$//g'
 )'$'
 
 cat $DIR/hosts \
